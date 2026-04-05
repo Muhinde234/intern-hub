@@ -55,19 +55,19 @@ export default function LandingPage() {
     <div className="min-h-screen bg-white flex flex-col">
 
       {/* Navbar */}
-      <nav className="absolute top-0 left-0 right-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image src="/image/intern-logo.png" alt="InternHub" width={40} height={40} className="object-contain" />
-            <span className="text-xl font-bold text-white">InternHub</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+        <div className="max-w-6xl mx-auto px-6 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Image src="/image/intern-logo.png" alt="InternHub" width={32} height={32} className="object-contain" />
+            <span className="text-base font-bold text-blue-900">InternHub</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-medium text-white/80 hover:text-white transition-colors">
+            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-blue-900 transition-colors">
               Sign In
             </Link>
             <Link
               href="/register"
-              className="text-sm font-semibold bg-white text-blue-950 px-4 py-2 rounded-full hover:bg-blue-50 transition-colors"
+              className="text-sm font-semibold bg-blue-900 text-white px-4 py-1.5 rounded-full hover:bg-blue-800 transition-colors"
             >
               Get Started
             </Link>
@@ -84,16 +84,28 @@ export default function LandingPage() {
         </div>
 
         <div className="max-w-4xl mx-auto text-center space-y-7 relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/10 text-blue-200 text-sm px-4 py-1.5 rounded-full border border-white/20 backdrop-blur-sm">
+          {/* AI badge */}
+          <div className="inline-flex items-center gap-2 bg-teal-400/20 text-teal-200 text-sm px-4 py-1.5 rounded-full border border-teal-400/30 backdrop-blur-sm">
             ✨ Powered by Claude AI
           </div>
+
           <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
             The Smart Internship Portal <br className="hidden sm:block" />
             for African Universities
           </h1>
+
           <p className="text-lg text-blue-200 max-w-2xl mx-auto leading-relaxed">
             Centralize every step of your internship programme — from applications and placements to weekly logs and evaluations — in one intelligent platform.
           </p>
+
+          {/* Role pills */}
+          <div className="flex flex-wrap justify-center gap-2 pt-1">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-400/20 text-blue-200 border border-blue-400/30">Students</span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-400/20 text-indigo-200 border border-indigo-400/30">Companies</span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-teal-400/20 text-teal-200 border border-teal-400/30">Supervisors</span>
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-sky-400/20 text-sky-200 border border-sky-400/30">Admins</span>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
             <Link
               href="/register"
