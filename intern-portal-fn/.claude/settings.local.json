@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm list:*)"
+      "Bash(npm list:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma:*)",
+      "Bash(npx ts-node:*)"
     ]
   }
 }

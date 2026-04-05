@@ -1,0 +1,228 @@
+// Intern Hub – Full Schema (FR1–FR8)
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ─── FR1: User Registration & Login ────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Role-specific profiles (at most one will be set)
+  studentProfile    StudentProfile?
+  companyProfile    CompanyProfile?
+  supervisorProfile SupervisorProfile?
+
+  notifications Notification[]
+}
+
+enum Role {
+  STUDENT
+  COMPANY
+  SUPERVISOR
+  ADMIN
+}
+
+model StudentProfile {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName   String
+  phone      String?
+  university String  @default("University of Rwanda")
+  major      String?
+  year       Int?
+  gpa        Float?
+  skills     String  @default("") // comma-separated
+  bio        String?
+
+  applications Application[]
+  placements   Placement[]
+  weeklyLogs   WeeklyLog[]
+  evaluations  Evaluation[]
+}
+
+model CompanyProfile {
+  id          String  @id @default(cuid())
+  userId      String  @unique
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String
+  industry    String?
+  website     String?
+  location    String?
+  description String?
+
+  internships Internship[]
+}
+
+model SupervisorProfile {
+  id         String  @id @default(cuid())
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName   String
+  department String?
+  phone      String?
+
+  weeklyLogs  WeeklyLog[]
+  evaluations Evaluation[]
+}
+
+// ─── FR2: Internship Posting ────────────────────────────────────────────────
+
+model Internship {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     CompanyProfile @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  skills      String   @default("") // comma-separated
+  location    String?
+  duration    String?  // e.g. "3 months"
+  deadline    DateTime
+  isOpen      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  applications Application[]
+  placements   Placement[]
+}
+
+// ─── FR3: Application Management ────────────────────────────────────────────
+
+model Application {
+  id           String            @id @default(cuid())
+  studentId    String
+  student      StudentProfile    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  internshipId String
+  internship   Internship        @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  coverLetter  String?
+  status       ApplicationStatus @default(PENDING)
+  appliedAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([studentId, internshipId])
+}
+
+enum ApplicationStatus {
+  PENDING
+  SHORTLISTED
+  REJECTED
+  ACCEPTED
+}
+
+// ─── FR4: Placement Approval ─────────────────────────────────────────────────
+
+model Placement {
+  id           String          @id @default(cuid())
+  studentId    String
+  student      StudentProfile  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  internshipId String
+  internship   Internship      @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  supervisorId String?
+  status       PlacementStatus @default(PENDING)
+  startDate    DateTime?
+  endDate      DateTime?
+  approvedAt   DateTime?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  weeklyLogs  WeeklyLog[]
+  evaluations Evaluation[]
+
+  @@unique([studentId, internshipId])
+}
+
+enum PlacementStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  ONGOING
+  COMPLETED
+}
+
+// ─── FR5: Progress Tracking (Weekly Logs) ───────────────────────────────────
+
+model WeeklyLog {
+  id           String         @id @default(cuid())
+  placementId  String
+  placement    Placement      @relation(fields: [placementId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      StudentProfile @relation(fields: [studentId], references: [id])
+  supervisorId String?
+  supervisor   SupervisorProfile? @relation(fields: [supervisorId], references: [id])
+  weekNumber   Int
+  content      String
+  aiScore      Int?
+  aiFeedback   String?
+  status       LogStatus      @default(DRAFT)
+  submittedAt  DateTime?
+  reviewedAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@unique([placementId, weekNumber])
+}
+
+enum LogStatus {
+  DRAFT
+  SUBMITTED
+  REVIEWED
+}
+
+// ─── FR6: Evaluation Forms ───────────────────────────────────────────────────
+
+model Evaluation {
+  id               String            @id @default(cuid())
+  placementId      String
+  placement        Placement         @relation(fields: [placementId], references: [id], onDelete: Cascade)
+  studentId        String
+  student          StudentProfile    @relation(fields: [studentId], references: [id])
+  supervisorId     String
+  supervisor       SupervisorProfile @relation(fields: [supervisorId], references: [id])
+  technicalScore   Int?
+  communicationScore Int?
+  professionalismScore Int?
+  overallScore     Int?
+  grade            String?
+  technicalComment String?
+  communicationComment String?
+  professionalismComment String?
+  overallComment   String?
+  recommendation   String?
+  status           EvalStatus        @default(DRAFT)
+  submittedAt      DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@unique([placementId])
+}
+
+enum EvalStatus {
+  DRAFT
+  SUBMITTED
+}
+
+// ─── FR7: Notifications ──────────────────────────────────────────────────────
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // e.g. APPLICATION_UPDATE, LOG_DUE, EVALUATION_READY
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
