@@ -53,13 +53,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setEmail(storedEmail);
 
     if (!localStorage.getItem("token")) {
-      router.push("/");
+      router.push("/login");
     }
   }, [router]);
 
   const logout = () => {
     localStorage.clear();
-    router.push("/");
+    router.push("/login");
   };
 
   const navItems = NAV[role] ?? [];
