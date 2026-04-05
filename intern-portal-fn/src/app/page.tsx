@@ -57,9 +57,10 @@ export default function LoginForm() {
         return;
       }
 
-      // Store token and role
+      // Store token, role and email
       localStorage.setItem("token", data.token);
       localStorage.setItem("role", data.role);
+      localStorage.setItem("email", values.email);
 
       // Redirect based on role
       router.push(ROLE_REDIRECT[data.role] ?? "/");

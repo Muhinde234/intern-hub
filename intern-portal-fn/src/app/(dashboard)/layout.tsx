@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  Users, Building2, FileText, BarChart3, Briefcase,
-  ClipboardList, BookOpen, UserCheck, Star, Bell,
-  LogOut, Menu, X, GraduationCap
+  Users, FileText, BarChart3, Briefcase,
+  ClipboardList, BookOpen, Star, Bell,
+  LogOut, Menu, GraduationCap
 } from "lucide-react";
 
 const NAV: Record<string, { label: string; href: string; icon: React.ElementType }[]> = {
@@ -64,15 +65,28 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const navItems = NAV[role] ?? [];
 
   const Sidebar = () => (
-    <div className="flex flex-col h-full bg-blue-900 text-white w-60 shrink-0">
-      {/* Logo */}
-      <div className="px-6 py-5 border-b border-blue-800">
-        <h1 className="text-lg font-bold tracking-tight">InternHub</h1>
-        <p className="text-xs text-blue-300 mt-0.5">{ROLE_LABELS[role] ?? ""} Portal</p>
+    <div className="flex flex-col h-full bg-blue-900 text-white w-64 shrink-0">
+      {/* Logo area */}
+      <div className="flex flex-col items-center gap-2 px-6 pt-6 pb-5 border-b border-blue-800">
+        <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center overflow-hidden shadow-md">
+          <Image
+            src="/image/intern-logo.png"
+            alt="InternHub Logo"
+            width={72}
+            height={72}
+            className="object-contain"
+          />
+        </div>
+        <div className="text-center">
+          <h1 className="text-base font-bold tracking-wide text-white">InternHub</h1>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white/15 text-blue-100 mt-0.5 inline-block">
+            {ROLE_LABELS[role] ?? ""} Portal
+          </span>
+        </div>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-1">
+      <nav className="flex-1 px-3 py-5 space-y-1">
         {navItems.map(({ label, href, icon: Icon }) => {
           const active = pathname === href || pathname.startsWith(href + "/");
           return (
@@ -80,10 +94,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               key={href}
               href={href}
               onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 active
-                  ? "bg-white text-blue-900"
-                  : "text-blue-100 hover:bg-blue-800"
+                  ? "bg-white text-blue-900 shadow-sm"
+                  : "text-blue-100 hover:bg-blue-800/70 hover:text-white"
               }`}
             >
               <Icon size={17} />
@@ -94,11 +108,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </nav>
 
       {/* User + Logout */}
-      <div className="px-4 py-4 border-t border-blue-800 space-y-2">
-        <p className="text-xs text-blue-300 truncate">{email}</p>
+      <div className="px-4 py-4 border-t border-blue-800">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold text-white shrink-0">
+            {email?.[0]?.toUpperCase() ?? "U"}
+          </div>
+          <p className="text-xs text-blue-200 truncate flex-1">{email}</p>
+        </div>
         <button
           onClick={logout}
-          className="flex items-center gap-2 text-sm text-blue-200 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-sm text-blue-300 hover:text-white transition-colors w-full px-2 py-1.5 rounded-lg hover:bg-blue-800/60"
         >
           <LogOut size={15} /> Sign out
         </button>
