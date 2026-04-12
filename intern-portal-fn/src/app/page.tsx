@@ -2,282 +2,187 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Briefcase, BookOpen, Star, BarChart3, Bell, CheckCircle } from "lucide-react";
+import { ArrowRight, Briefcase, BookOpen, Star, BarChart3, Bell, CheckCircle, Sparkles } from "lucide-react";
 
 const FEATURES = [
-  {
-    icon: Briefcase,
-    title: "Smart Internship Matching",
-    desc: "AI-powered matching connects students to the right internships based on their skills, interests, and academic profile.",
-    color: "bg-blue-50 text-blue-600",
-  },
-  {
-    icon: BookOpen,
-    title: "Weekly Progress Logs",
-    desc: "Students submit structured weekly logs. Supervisors review them online — no paperwork, no delays.",
-    color: "bg-indigo-50 text-indigo-600",
-  },
-  {
-    icon: Star,
-    title: "Digital Evaluations",
-    desc: "Supervisors complete AI-assisted digital assessments and assign grades directly on the platform.",
-    color: "bg-blue-50 text-blue-700",
-  },
-  {
-    icon: Bell,
-    title: "Automated Notifications",
-    desc: "Automatic reminders for log submissions, placement approvals, and evaluation deadlines.",
-    color: "bg-teal-50 text-teal-600",
-  },
-  {
-    icon: BarChart3,
-    title: "Reports & Analytics",
-    desc: "University management gets real-time dashboards with internship performance and participation stats.",
-    color: "bg-sky-50 text-sky-600",
-  },
-  {
-    icon: CheckCircle,
-    title: "Placement Approval",
-    desc: "The internship office reviews and approves placements centrally — full visibility at every step.",
-    color: "bg-emerald-50 text-emerald-600",
-  },
-];
-
-const ROLES = [
-  { label: "Students", desc: "Apply for internships, submit logs, track progress", color: "border-blue-200 bg-blue-50" },
-  { label: "Companies", desc: "Post opportunities, review applicants, evaluate interns", color: "border-indigo-200 bg-indigo-50" },
-  { label: "Supervisors", desc: "Guide students, review logs, complete evaluations", color: "border-teal-200 bg-teal-50" },
-  { label: "Admins", desc: "Manage placements, monitor performance, generate reports", color: "border-sky-200 bg-sky-50" },
+  { icon: Briefcase,    title: "AI Internship Matching",    desc: "Claude AI ranks every internship by fit — matching your skills, major, and interests automatically.",       tag: "AI",        tagColor: "text-blue-600 bg-blue-50" },
+  { icon: BookOpen,     title: "Weekly Progress Logs",       desc: "Submit structured logs weekly and get instant AI feedback on clarity, depth, and professionalism.",         tag: "AI",        tagColor: "text-indigo-600 bg-indigo-50" },
+  { icon: Star,         title: "Digital Evaluations",        desc: "Supervisors get an AI-drafted evaluation they can review, edit, and submit — saving hours of work.",         tag: "AI",        tagColor: "text-teal-600 bg-teal-50" },
+  { icon: CheckCircle,  title: "Placement Approval",         desc: "The internship office approves placements centrally. Every status change is visible in real time.",          tag: "Admin",     tagColor: "text-sky-600 bg-sky-50" },
+  { icon: Bell,         title: "Smart Notifications",        desc: "Automatic reminders for deadlines, approvals, and evaluations — no one slips through the cracks.",           tag: "Real-time", tagColor: "text-emerald-600 bg-emerald-50" },
+  { icon: BarChart3,    title: "Reports & Analytics",        desc: "Management dashboards with live participation stats, placement rates, and evaluation scores.",                tag: "Insights",  tagColor: "text-violet-600 bg-violet-50" },
 ];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col font-sans">
 
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-2.5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image src="/image/intern-logo.png" alt="InternHub" width={32} height={32} className="object-contain" />
-            <span className="text-base font-bold text-blue-900">InternHub</span>
+      {/* ── Navbar ── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <Image src="/image/intern-logo.png" alt="InternHub" width={30} height={30} className="object-contain" />
+            <span className="font-extrabold text-blue-950 tracking-tight">InternHub</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-blue-900 transition-colors">
+          <div className="flex items-center gap-2">
+            <Link href="/login" className="text-sm font-medium text-gray-500 hover:text-blue-900 px-3 py-1.5 transition-colors">
               Sign In
             </Link>
-            <Link
-              href="/register"
-              className="text-sm font-semibold bg-blue-900 text-white px-4 py-1.5 rounded-full hover:bg-blue-800 transition-colors"
-            >
+            <Link href="/register" className="text-sm font-semibold bg-blue-950 text-white px-4 py-1.5 rounded-full hover:bg-blue-800 transition-colors">
               Get Started
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Hero — full screen */}
-      <section className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-blue-800 text-white flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        {/* Subtle background circles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-700/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-800/30 rounded-full blur-3xl" />
-        </div>
+      {/* ── Hero ── */}
+      <section className="min-h-screen bg-blue-950 flex flex-col items-center justify-center px-6 pt-14 relative overflow-hidden">
+        {/* Grid overlay */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+        {/* Glow */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-700/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto text-center space-y-7 relative z-10">
-          {/* AI badge */}
-          <div className="inline-flex items-center gap-2 bg-teal-400/20 text-teal-200 text-sm px-4 py-1.5 rounded-full border border-teal-400/30 backdrop-blur-sm">
-            ✨ Powered by Claude AI
+        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-8">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300 text-xs font-semibold">
+            <Sparkles size={13} /> Powered by Claude AI
           </div>
 
-          <h1 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
-            The Smart Internship Portal <br className="hidden sm:block" />
-            for African Universities
+          {/* Headline */}
+          <h1 className="text-5xl sm:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
+            Internship management,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-blue-300">
+              reimagined.
+            </span>
           </h1>
 
-          <p className="text-lg text-blue-200 max-w-2xl mx-auto leading-relaxed">
-            Centralize every step of your internship programme — from applications and placements to weekly logs and evaluations — in one intelligent platform.
+          <p className="text-blue-300 text-lg max-w-xl mx-auto leading-relaxed">
+            One platform for students, companies, supervisors and admins — with AI at every step.
           </p>
 
-          {/* Role pills */}
-          <div className="flex flex-wrap justify-center gap-2 pt-1">
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-400/20 text-blue-200 border border-blue-400/30">Students</span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-indigo-400/20 text-indigo-200 border border-indigo-400/30">Companies</span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-teal-400/20 text-teal-200 border border-teal-400/30">Supervisors</span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-sky-400/20 text-sky-200 border border-sky-400/30">Admins</span>
+          {/* Role chips */}
+          <div className="flex flex-wrap justify-center gap-2">
+            {[
+              { label: "Students",    bg: "bg-blue-500/15 border-blue-400/25 text-blue-200" },
+              { label: "Companies",   bg: "bg-indigo-500/15 border-indigo-400/25 text-indigo-200" },
+              { label: "Supervisors", bg: "bg-teal-500/15 border-teal-400/25 text-teal-200" },
+              { label: "Admins",      bg: "bg-sky-500/15 border-sky-400/25 text-sky-200" },
+            ].map(({ label, bg }) => (
+              <span key={label} className={`px-4 py-1 rounded-full text-xs font-semibold border ${bg}`}>{label}</span>
+            ))}
           </div>
 
+          {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center gap-2 bg-white text-blue-950 font-bold px-8 py-3.5 rounded-full hover:bg-blue-50 transition-colors text-sm shadow-lg"
-            >
-              Get Started Free <ArrowRight size={16} />
+            <Link href="/register" className="inline-flex items-center justify-center gap-2 bg-white text-blue-950 font-bold px-7 py-3 rounded-full hover:bg-blue-50 transition-colors text-sm shadow-xl shadow-blue-950/40">
+              Create Free Account <ArrowRight size={15} />
             </Link>
-            <Link
-              href="/login"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 border border-white/30 text-white font-medium px-8 py-3.5 rounded-full hover:bg-white/20 transition-colors text-sm backdrop-blur-sm"
-            >
-              Sign In to Portal
+            <Link href="/login" className="inline-flex items-center justify-center gap-2 bg-white/8 border border-white/15 text-white/80 font-medium px-7 py-3 rounded-full hover:bg-white/15 transition-colors text-sm">
+              Sign In
             </Link>
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-blue-300/60 text-xs animate-bounce">
-          <span>Scroll</span>
-          <div className="w-px h-6 bg-blue-300/40" />
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-30">
+          <div className="w-5 h-8 rounded-full border border-white/40 flex items-start justify-center pt-1.5">
+            <div className="w-1 h-2 bg-white rounded-full animate-bounce" />
+          </div>
         </div>
       </section>
 
-      {/* Stats bar */}
-      <section className="bg-blue-950 border-b border-blue-900 py-8 px-6">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+      {/* ── Stats ── */}
+      <section className="bg-white py-16 px-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
           {[
-            { value: "4 Roles", label: "Student · Company · Supervisor · Admin" },
-            { value: "AI-Powered", label: "Smart matching & cover letters" },
-            { value: "Real-time", label: "Notifications & progress tracking" },
-            { value: "100%", label: "Digital — no paperwork" },
-          ].map(({ value, label }) => (
-            <div key={value}>
-              <p className="text-2xl font-extrabold text-white">{value}</p>
-              <p className="text-xs text-blue-300 mt-1">{label}</p>
+            { value: "4 Roles",     sub: "Students · Companies · Supervisors · Admins" },
+            { value: "AI-Powered",  sub: "Matching, logs, evaluations & cover letters" },
+            { value: "Real-time",   sub: "Notifications & live placement tracking" },
+            { value: "100% Digital",sub: "No paperwork, no manual coordination" },
+          ].map(({ value, sub }) => (
+            <div key={value} className="space-y-1">
+              <p className="text-2xl font-extrabold text-blue-950">{value}</p>
+              <p className="text-xs text-gray-400 leading-relaxed">{sub}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-24 px-6 bg-gray-50">
+      {/* ── Features ── */}
+      <section className="bg-gray-50 py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-16">
-            <span className="text-xs font-bold tracking-widest uppercase text-blue-600">What we offer</span>
-            <h2 className="text-4xl font-extrabold text-gray-900 mt-3 max-w-xl leading-tight">Everything you need, in one place</h2>
+          <div className="mb-14">
+            <p className="text-xs font-bold tracking-widest uppercase text-blue-600 mb-3">What's inside</p>
+            <h2 className="text-4xl font-extrabold text-gray-900 leading-tight max-w-lg">Everything you need, in one place</h2>
           </div>
 
-          <div className="space-y-0 divide-y divide-gray-200">
-            {[
-              {
-                number: "01",
-                icon: Briefcase,
-                title: "Smart Internship Matching",
-                desc: "AI-powered matching connects students to the right internships based on skills, interests, and academic profile.",
-                tag: "AI Powered",
-                tagColor: "bg-blue-100 text-blue-700",
-              },
-              {
-                number: "02",
-                icon: BookOpen,
-                title: "Weekly Progress Logs",
-                desc: "Students submit structured logs each week. Get instant AI feedback before submitting to your supervisor.",
-                tag: "AI Feedback",
-                tagColor: "bg-indigo-100 text-indigo-700",
-              },
-              {
-                number: "03",
-                icon: Star,
-                title: "Digital Evaluations",
-                desc: "Supervisors complete AI-assisted assessments and assign grades directly on the platform — no paper forms.",
-                tag: "AI Assisted",
-                tagColor: "bg-teal-100 text-teal-700",
-              },
-              {
-                number: "04",
-                icon: CheckCircle,
-                title: "Placement Approval",
-                desc: "The internship office reviews and approves all student placements centrally with full visibility.",
-                tag: "Admin Control",
-                tagColor: "bg-sky-100 text-sky-700",
-              },
-              {
-                number: "05",
-                icon: Bell,
-                title: "Automated Notifications",
-                desc: "Automatic reminders for log submissions, placement approvals, and evaluation deadlines — no one falls behind.",
-                tag: "Real-time",
-                tagColor: "bg-emerald-100 text-emerald-700",
-              },
-              {
-                number: "06",
-                icon: BarChart3,
-                title: "Reports & Analytics",
-                desc: "University management gets live dashboards with internship performance and participation statistics.",
-                tag: "Insights",
-                tagColor: "bg-violet-100 text-violet-700",
-              },
-            ].map(({ number, icon: Icon, title, desc, tag, tagColor }) => (
-              <div key={number} className="group flex items-start gap-6 sm:gap-10 py-8 hover:bg-white transition-colors rounded-2xl px-4 cursor-default">
-                <span className="text-4xl font-black text-gray-100 group-hover:text-blue-100 transition-colors select-none shrink-0 w-12 text-right leading-none mt-1">
-                  {number}
-                </span>
-                <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 group-hover:border-blue-200 flex items-center justify-center shrink-0 shadow-sm transition-colors">
-                  <Icon size={18} className="text-blue-900" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 flex-wrap mb-1.5">
-                    <h3 className="font-bold text-gray-900 text-lg">{title}</h3>
-                    <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${tagColor}`}>{tag}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {FEATURES.map(({ icon: Icon, title, desc, tag, tagColor }) => (
+              <div key={title} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-blue-200 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+                <div className="flex items-start justify-between mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-blue-950 flex items-center justify-center">
+                    <Icon size={18} className="text-white" />
                   </div>
-                  <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+                  <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${tagColor}`}>{tag}</span>
                 </div>
+                <h3 className="font-bold text-gray-900 mb-2">{title}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Who it's for */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">Built for everyone in the internship journey</h2>
+      {/* ── Who it's for ── */}
+      <section className="bg-white py-24 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-14 text-center">
+            <p className="text-xs font-bold tracking-widest uppercase text-blue-600 mb-3">Who it's for</p>
+            <h2 className="text-4xl font-extrabold text-gray-900">Built for every role</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {ROLES.map(({ label, desc, color }) => (
-              <div key={label} className={`p-5 rounded-2xl border-2 ${color}`}>
-                <p className="font-bold text-gray-800 text-lg">{label}</p>
-                <p className="text-sm text-gray-600 mt-1">{desc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {[
+              { role: "Students",    desc: "Browse internships, apply with AI cover letters, submit weekly logs, and track your placement from start to finish.", pill: "bg-blue-950 text-white" },
+              { role: "Companies",   desc: "Post opportunities, receive applications, shortlist candidates, and evaluate interns — all in one dashboard.", pill: "bg-indigo-600 text-white" },
+              { role: "Supervisors", desc: "Monitor assigned students, review weekly logs, and complete AI-assisted evaluations with just a few clicks.", pill: "bg-teal-600 text-white" },
+              { role: "Admins",      desc: "Approve placements, manage all users, and generate institutional reports with real-time data.", pill: "bg-sky-600 text-white" },
+            ].map(({ role, desc, pill }) => (
+              <div key={role} className="group flex gap-5 p-6 rounded-2xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-all">
+                <span className={`shrink-0 text-xs font-bold px-3 py-1 rounded-full h-fit ${pill}`}>{role}</span>
+                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 px-6 bg-blue-950 text-white text-center">
-        <div className="max-w-2xl mx-auto space-y-5">
-          <h2 className="text-3xl font-bold">Ready to modernize your internship programme?</h2>
-          <p className="text-blue-300">Join InternHub and eliminate manual coordination forever.</p>
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 bg-white text-blue-950 font-bold px-8 py-3.5 rounded-full hover:bg-blue-50 transition-colors"
-          >
-            Create Your Account <ArrowRight size={16} />
+      {/* ── CTA ── */}
+      <section className="bg-blue-950 py-24 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.1) 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+        <div className="relative z-10 max-w-2xl mx-auto text-center space-y-6">
+          <h2 className="text-4xl font-extrabold text-white leading-tight">Ready to go fully digital?</h2>
+          <p className="text-blue-300">Join InternHub and eliminate manual internship coordination forever.</p>
+          <Link href="/register" className="inline-flex items-center gap-2 bg-white text-blue-950 font-bold px-8 py-3.5 rounded-full hover:bg-blue-50 transition-colors shadow-xl shadow-blue-950/40">
+            Get Started Free <ArrowRight size={15} />
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 px-6 py-10">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          {/* Brand */}
-          <div className="flex items-center gap-3">
-            <Image src="/image/intern-logo.png" alt="InternHub" width={36} height={36} className="object-contain" />
+      {/* ── Footer ── */}
+      <footer className="bg-white border-t border-gray-100 px-6 py-8">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <Image src="/image/intern-logo.png" alt="InternHub" width={28} height={28} className="object-contain" />
             <div>
-              <p className="font-bold text-blue-900 text-base">InternHub</p>
+              <p className="font-extrabold text-blue-950 text-sm">InternHub</p>
               <p className="text-xs text-gray-400">Internship & Industrial Attachment Portal</p>
             </div>
           </div>
-
-          {/* Links */}
-          <div className="flex items-center gap-6 text-sm text-gray-500">
+          <div className="flex items-center gap-6 text-sm text-gray-400">
             <Link href="/login" className="hover:text-blue-900 transition-colors">Sign In</Link>
             <Link href="/register" className="hover:text-blue-900 transition-colors">Register</Link>
           </div>
-
-          {/* Copyright */}
-          <p className="text-xs text-gray-400 text-center sm:text-right">
-            © 2026 InternHub · Powered by Claude AI
-          </p>
+          <p className="text-xs text-gray-400">© 2026 InternHub · Powered by Claude AI</p>
         </div>
       </footer>
     </div>
